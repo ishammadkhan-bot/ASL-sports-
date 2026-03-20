@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Athlete Sports Lab — Professional Sports Development Partner</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700;1,800;1,900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;--white:#f4f3ef;
+  --orange:#ff5c1a;--orange-dim:#cc4612;--orange-glow:rgba(255,92,26,.15);
+  --g900:#111111;--g800:#1a1a1a;--g750:#202020;--g700:#2a2a2a;
+  --g500:#555550;--g400:#888880;--g200:#c8c7c0;
+  --fd:'Barlow Condensed',sans-serif;--fb:'Barlow',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--white);font-family:var(--fb);overflow-x:hidden}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--orange)}
+
+/* ─── NAV ───────────────────────────────────────────── */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:.9rem 5vw;background:rgba(8,8,8,.94);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.05)}
+.nav-logo{display:flex;align-items:center;gap:.65rem;text-decoration:none}
+.nav-logo-badge{width:36px;height:36px;background:var(--orange);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:900;font-size:.82rem;letter-spacing:.02em;color:#fff;flex-shrink:0}
+.nav-logo-text{line-height:1.1}
+.nav-logo-main{font-family:var(--fd);font-size:1.1rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--white);display:block}
+.nav-logo-sub{font-family:var(--fd);font-size:.58rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--g400);display:block}
+.nav-menu{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-menu a{font-family:var(--fd);font-size:.82rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);text-decoration:none;transition:color .2s}
+.nav-menu a:hover{color:var(--white)}
+.nav-cta{background:var(--orange)!important;color:#fff!important;padding:.5rem 1.3rem;border-radius:3px;transition:background .2s!important}
+.nav-cta:hover{background:var(--orange-dim)!important}
+
+/* ─── HERO ───────────────────────────────────────────── */
+.hero{min-height:100vh;display:grid;grid-template-rows:1fr auto;padding-top:5.5rem;position:relative;overflow:hidden}
+/* court grid */
+.hero-court{position:absolute;inset:0;opacity:.028;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.8) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.8) 1px,transparent 1px);background-size:64px 64px}
+.hero-court::after{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:500px;height:500px;border-radius:50%;border:1px solid rgba(255,255,255,.3);opacity:.2}
+/* ghost type bg */
+.hero-ghost{position:absolute;right:-.04em;bottom:-.1em;font-family:var(--fd);font-size:clamp(160px,28vw,420px);font-weight:900;font-style:italic;color:rgba(255,255,255,.018);line-height:1;pointer-events:none;user-select:none;letter-spacing:-.04em}
+/* basketball SVG deco top-right */
+.hero-ball-deco{position:absolute;top:5rem;right:3vw;width:clamp(120px,18vw,260px);height:clamp(120px,18vw,260px);opacity:.07;pointer-events:none}
+.hero-content{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem;padding:3rem 5vw 0;position:relative;z-index:1}
+.hero-left{}
+.hero-eyebrow{display:flex;align-items:center;gap:.7rem;margin-bottom:1.5rem}
+.hero-eyebrow-line{width:32px;height:2px;background:var(--orange);flex-shrink:0}
+.hero-eyebrow-text{font-family:var(--fd);font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
+.hero h1{font-family:var(--fd);font-size:clamp(3.8rem,9.5vw,9rem);font-weight:900;line-height:.9;letter-spacing:-.01em;text-transform:uppercase;color:var(--white);margin-bottom:1.75rem;animation:fadeUp .6s ease .1s both}
+.hero h1 em{color:var(--orange);font-style:italic;display:block}
+.hero-desc{font-size:1rem;color:var(--g200);font-weight:300;line-height:1.8;max-width:50ch;margin-bottom:2.25rem;animation:fadeUp .6s ease .25s both}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .6s ease .35s both}
+.btn-primary{background:var(--orange);color:#fff;font-family:var(--fd);font-size:.88rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2rem;border:none;border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
+.btn-primary:hover{background:var(--orange-dim);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--white);font-family:var(--fd);font-size:.88rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.9rem 2rem;border:1.5px solid rgba(255,255,255,.18);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color .2s,transform .15s}
+.btn-outline:hover{border-color:rgba(255,255,255,.6);transform:translateY(-2px)}
+/* hero right - photo */
+.hero-photo-wrap{position:relative;animation:fadeUp .7s ease .2s both}
+.hero-photo{border-radius:8px;overflow:hidden;height:480px;position:relative;box-shadow:0 40px 100px rgba(0,0,0,.6)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(0,0,0,.7));pointer-events:none}
+.hero-photo-badge{position:absolute;bottom:1.25rem;left:1.25rem;right:1.25rem;display:flex;gap:.75rem;z-index:2}
+.hpb{background:rgba(255,92,26,.92);backdrop-filter:blur(10px);padding:.65rem 1rem;border-radius:4px;flex:1;text-align:center}
+.hpb-n{font-family:var(--fd);font-size:1.6rem;font-weight:900;color:#fff;line-height:1}
+.hpb-l{font-size:.6rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.8)}
+.hpb.alt{background:rgba(8,8,8,.85);border:1px solid rgba(255,92,26,.3)}
+/* stats bar */
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,.06);position:relative;z-index:1}
+.hstat{padding:1.6rem 5vw;border-right:1px solid rgba(255,255,255,.06);background:rgba(255,92,26,.03)}
+.hstat:last-child{border-right:none}
+.hstat-n{font-family:var(--fd);font-size:2.4rem;font-weight:900;color:var(--orange);line-height:1}
+.hstat-l{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-top:.2rem}
+
+/* ─── TICKER ─────────────────────────────────────────── */
+.ticker{background:var(--orange);overflow:hidden;padding:.55rem 0;white-space:nowrap}
+.ticker-track{display:inline-flex;animation:tick 26s linear infinite}
+.ticker-item{font-family:var(--fd);font-size:.82rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--black);padding:0 2.5rem}
+.ticker-sep{color:rgba(0,0,0,.3)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ─── SECTION COMMONS ────────────────────────────────── */
+.sec-tag{display:flex;align-items:center;gap:.65rem;margin-bottom:1.2rem}
+.sec-tag::before{content:'';width:24px;height:2px;background:var(--orange);flex-shrink:0}
+.sec-tag span{font-family:var(--fd);font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--orange)}
+.sec-h{font-family:var(--fd);font-size:clamp(2.4rem,4.5vw,4rem);font-weight:900;text-transform:uppercase;line-height:.95;letter-spacing:-.01em;color:var(--white)}
+.sec-h em{font-style:italic;color:var(--orange)}
+
+/* ─── ABOUT ──────────────────────────────────────────── */
+.about{padding:7rem 5vw;background:var(--g900);position:relative;overflow:hidden}
+.about-ghost{position:absolute;right:-.04em;top:50%;transform:translateY(-50%);font-family:var(--fd);font-size:clamp(100px,20vw,300px);font-weight:900;font-style:italic;color:rgba(255,255,255,.018);line-height:1;pointer-events:none;user-select:none}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;position:relative;z-index:1}
+.about-left p{font-size:.97rem;color:var(--g200);font-weight:300;line-height:1.85;margin-bottom:1.25rem}
+.about-vm{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:2rem 0}
+.vm{background:var(--g800);border:1px solid rgba(255,255,255,.05);padding:1.5rem;border-radius:3px;border-top:2px solid var(--orange)}
+.vm h4{font-family:var(--fd);font-size:.95rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--orange);margin-bottom:.55rem}
+.vm p{font-size:.83rem;color:var(--g400);font-weight:300;line-height:1.7;margin:0}
+.about-values{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--g700);border:1px solid var(--g700);margin-top:2rem}
+.aval{background:var(--g900);padding:1.4rem;transition:background .2s}
+.aval:hover{background:var(--g800)}
+.aval-icon{font-size:1.2rem;margin-bottom:.55rem}
+.aval h5{font-family:var(--fd);font-size:.9rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--white);margin-bottom:.35rem}
+.aval p{font-size:.8rem;color:var(--g400);font-weight:300;line-height:1.6;margin:0}
+/* about right - photo stack */
+.about-right{display:flex;flex-direction:column;gap:1.5rem}
+.about-photo-main{border-radius:6px;overflow:hidden;height:320px;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.about-photo-main img{width:100%;height:100%;object-fit:cover;display:block}
+.about-stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--g700);border:1px solid var(--g700)}
+.ast{background:var(--g900);padding:1.5rem;border-top:2px solid var(--orange)}
+.ast-n{font-family:var(--fd);font-size:2.8rem;font-weight:900;color:var(--orange);line-height:1}
+.ast-l{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-top:.2rem}
+.about-photo-secondary{border-radius:6px;overflow:hidden;height:200px;box-shadow:0 16px 40px rgba(0,0,0,.4)}
+.about-photo-secondary img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* ─── WHY ASL ─────────────────────────────────────────── */
+.why{padding:7rem 5vw;background:var(--black);position:relative;overflow:hidden}
+.why-ball-bg{position:absolute;right:-60px;bottom:-60px;width:380px;height:380px;border-radius:50%;border:2px solid rgba(255,92,26,.07);pointer-events:none}
+.why-ball-bg::before{content:'';position:absolute;inset:40px;border-radius:50%;border:2px solid rgba(255,92,26,.05)}
+.why-ball-bg::after{content:'';position:absolute;inset:80px;border-radius:50%;border:2px solid rgba(255,92,26,.04)}
+.why-header{text-align:center;margin-bottom:.75rem}
+.why-header .sec-tag{justify-content:center}
+.why-header p{font-size:.97rem;color:var(--g400);font-weight:300;max-width:60ch;margin:.7rem auto 0;line-height:1.75}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem;position:relative;z-index:1}
+.wcard{background:var(--g900);border:1px solid rgba(255,255,255,.05);border-radius:4px;padding:2rem;position:relative;overflow:hidden;transition:border-color .25s,transform .25s}
+.wcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.wcard:hover::before{transform:scaleX(1)}
+.wcard:hover{border-color:rgba(255,92,26,.25);transform:translateY(-3px)}
+.wcard-num{position:absolute;top:1rem;right:1.25rem;font-family:var(--fd);font-size:3rem;font-weight:900;color:rgba(255,255,255,.04);line-height:1}
+.wcard-icon{width:44px;height:44px;border-radius:6px;background:rgba(255,92,26,.1);border:1px solid rgba(255,92,26,.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:1.2rem}
+.wcard h3{font-family:var(--fd);font-size:1rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:.55rem}
+.wcard p{font-size:.855rem;color:var(--g400);font-weight:300;line-height:1.7;margin:0}
+.why-cta{margin-top:4rem;background:var(--g900);border:1px solid rgba(255,92,26,.15);border-radius:4px;padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;z-index:1}
+.why-cta h4{font-family:var(--fd);font-size:1.7rem;font-weight:900;text-transform:uppercase;color:var(--white);line-height:1.1}
+.why-cta p{font-size:.87rem;color:var(--g400);font-weight:300;margin-top:.4rem}
+.why-cta-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-orange{background:var(--orange);color:#fff;font-family:var(--fd);font-size:.83rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 1.75rem;border:none;border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
+.btn-orange:hover{background:var(--orange-dim);transform:translateY(-2px)}
+.btn-ghost-o{background:transparent;color:var(--white);font-family:var(--fd);font-size:.83rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 1.75rem;border:1.5px solid rgba(255,255,255,.15);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color .2s,transform .15s}
+.btn-ghost-o:hover{border-color:var(--white);transform:translateY(-2px)}
+
+/* ─── PROGRAMS ────────────────────────────────────────── */
+.programs{padding:7rem 5vw;background:var(--g900)}
+.prog-top{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap}
+.prog-top p{font-size:.95rem;color:var(--g400);font-weight:300;max-width:38ch;line-height:1.7}
+.prog-tabs{display:flex;background:var(--g800);border:1px solid rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin-bottom:2.5rem}
+.ptab{flex:1;padding:.85rem 1rem;font-family:var(--fd);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g400);background:transparent;border:none;cursor:pointer;transition:.2s;border-right:1px solid rgba(255,255,255,.06)}
+.ptab:last-child{border-right:none}
+.ptab.on{background:var(--orange);color:#fff}
+.ptab:hover:not(.on){background:rgba(255,255,255,.04);color:var(--white)}
+.ppanel{display:none;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;background:var(--g800);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:2.5rem}
+.ppanel.on{display:grid}
+.pp-icon{width:48px;height:48px;border-radius:6px;background:rgba(255,92,26,.12);border:1px solid rgba(255,92,26,.2);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem}
+.ppanel h3{font-family:var(--fd);font-size:1.7rem;font-weight:900;text-transform:uppercase;color:var(--white);margin-bottom:.35rem}
+.ppanel h3 em{color:var(--orange);font-style:italic}
+.pp-sub{font-size:.85rem;color:var(--g400);font-weight:300;margin-bottom:1.5rem}
+.pp-sec-title{font-family:var(--fd);font-size:.72rem;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--orange);margin-bottom:.7rem}
+.pp-list{list-style:none;display:flex;flex-direction:column;gap:.48rem;margin-bottom:1.5rem}
+.pp-list li{font-size:.875rem;color:var(--g200);font-weight:300;display:flex;align-items:flex-start;gap:.6rem;line-height:1.55}
+.pp-list li::before{content:'✦';color:var(--orange);font-size:.58rem;margin-top:.35rem;flex-shrink:0}
+.pp-tags{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:1rem}
+.pp-tag{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--orange);background:rgba(255,92,26,.1);border:1px solid rgba(255,92,26,.2);padding:.22rem .65rem;border-radius:2px}
+/* program photo */
+.pp-photo{border-radius:6px;overflow:hidden;height:100%;min-height:320px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.pp-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.pp-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 55%,rgba(0,0,0,.75));pointer-events:none}
+.pp-photo-label{position:absolute;bottom:1rem;left:1rem;right:1rem;z-index:2;font-family:var(--fd);font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+
+/* ─── PROCESS ─────────────────────────────────────────── */
+.process{padding:7rem 5vw;background:var(--black);position:relative;overflow:hidden}
+.process-ghost{position:absolute;left:-.04em;bottom:-.1em;font-family:var(--fd);font-size:clamp(100px,18vw,260px);font-weight:900;font-style:italic;color:rgba(255,255,255,.015);line-height:1;pointer-events:none}
+.process-header{text-align:center;margin-bottom:.75rem;position:relative;z-index:1}
+.process-header .sec-tag{justify-content:center}
+.process-header p{font-size:.95rem;color:var(--g400);font-weight:300;max-width:52ch;margin:.7rem auto 0;line-height:1.75}
+.process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--g700);border:1px solid var(--g700);margin-top:3.5rem;position:relative;z-index:1}
+.pstep{background:var(--black);padding:2rem 1.5rem;transition:background .2s;position:relative}
+.pstep:hover{background:var(--g900)}
+.pstep-n{font-family:var(--fd);font-size:3.5rem;font-weight:900;color:rgba(255,92,26,.12);line-height:1;margin-bottom:.6rem}
+.pstep-badge{display:inline-block;font-size:.63rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);background:rgba(255,92,26,.1);border:1px solid rgba(255,92,26,.2);padding:.2rem .6rem;border-radius:2px;margin-bottom:.7rem}
+.pstep h4{font-family:var(--fd);font-size:.97rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:.45rem}
+.pstep p{font-size:.8rem;color:var(--g400);font-weight:300;line-height:1.65;margin:0}
+.roles-box{margin-top:3rem;display:grid;grid-template-columns:1fr 1.2fr;gap:0;border:1px solid rgba(255,255,255,.06);border-radius:4px;overflow:hidden;position:relative;z-index:1}
+.rb-left{padding:2.5rem;background:var(--g900)}
+.rb-right{background:var(--g800);overflow:hidden;position:relative;min-height:220px}
+.rb-right img{width:100%;height:100%;object-fit:cover;display:block}
+.rb-right::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(26,26,26,.8),transparent)}
+.rb-left h4{font-family:var(--fd);font-size:1.25rem;font-weight:900;text-transform:uppercase;color:var(--white);margin-bottom:.5rem}
+.rb-left p{font-size:.875rem;color:var(--g400);font-weight:300;margin-bottom:1.5rem;line-height:1.7}
+.role-row{margin-bottom:1rem}
+.role-label{font-family:var(--fd);font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
+.role-asl{color:var(--orange)}
+.role-school{color:#6e9fff}
+.role-row p{font-size:.82rem;color:var(--g400);font-weight:300;line-height:1.6;margin:0}
+
+/* ─── SAFETY ──────────────────────────────────────────── */
+.safety{padding:7rem 5vw;background:var(--g900)}
+.safety-header{text-align:center;margin-bottom:.75rem}
+.safety-header .sec-tag{justify-content:center}
+.safety-header p{font-size:.95rem;color:var(--g400);font-weight:300;max-width:58ch;margin:.7rem auto 0;line-height:1.75}
+.safety-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3.5rem}
+.scard{background:var(--g800);border:1px solid rgba(255,255,255,.05);border-radius:4px;padding:1.75rem;transition:border-color .2s,transform .2s}
+.scard:hover{border-color:rgba(255,92,26,.25);transform:translateY(-2px)}
+.scard-icon{width:44px;height:44px;border-radius:6px;background:rgba(255,92,26,.1);border:1px solid rgba(255,92,26,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;margin-bottom:1rem}
+.scard h4{font-family:var(--fd);font-size:.97rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--white);margin-bottom:.45rem}
+.scard p{font-size:.83rem;color:var(--g400);font-weight:300;line-height:1.65;margin:0}
+.gov-box{margin-top:3rem;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid rgba(255,255,255,.06);border-radius:4px;overflow:hidden}
+.gov-left{padding:2.5rem;background:var(--g800)}
+.gov-right{position:relative;overflow:hidden;min-height:260px}
+.gov-right img{width:100%;height:100%;object-fit:cover;display:block}
+.gov-right::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(26,26,26,.6),transparent)}
+.gov-photo-overlay{position:absolute;bottom:1.5rem;left:1.5rem;z-index:2;background:rgba(255,92,26,.9);padding:.6rem 1rem;border-radius:3px;font-family:var(--fd);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#fff}
+.gov-left h4{font-family:var(--fd);font-size:1.2rem;font-weight:900;text-transform:uppercase;color:var(--white);margin-bottom:.5rem}
+.gov-left>p{font-size:.875rem;color:var(--g400);font-weight:300;margin-bottom:1.25rem;line-height:1.7}
+.gov-list{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.gov-list li{font-size:.855rem;color:var(--g200);font-weight:300;display:flex;align-items:flex-start;gap:.6rem;line-height:1.5}
+.gov-list li::before{content:'✦';color:var(--orange);font-size:.58rem;margin-top:.35rem;flex-shrink:0}
+
+/* ─── BENEFITS ────────────────────────────────────────── */
+.benefits{padding:7rem 5vw;background:var(--orange);position:relative;overflow:hidden}
+.benefits::before{content:'';position:absolute;right:-15%;top:-40%;width:700px;height:700px;border-radius:50%;border:80px solid rgba(0,0,0,.06);pointer-events:none}
+.benefits::after{content:'';position:absolute;left:-5%;bottom:-20%;width:400px;height:400px;border-radius:50%;border:50px solid rgba(0,0,0,.04);pointer-events:none}
+.ben-top{display:flex;align-items:flex-end;justify-content:space-between;gap:2rem;margin-bottom:3rem;flex-wrap:wrap;position:relative;z-index:1}
+.ben-top .sec-tag::before{background:var(--black)}
+.ben-top .sec-tag span{color:var(--black)}
+.benefits .sec-h{color:var(--black)}
+.benefits .sec-h em{color:var(--black);font-style:italic;-webkit-text-stroke:1px rgba(255,255,255,.4)}
+.ben-sub{font-size:.95rem;color:rgba(0,0,0,.6);font-weight:300;max-width:36ch;line-height:1.75}
+.ben-tabs{display:flex;gap:.5rem;flex-wrap:wrap;position:relative;z-index:1;margin-bottom:2.5rem}
+.btab{font-family:var(--fd);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.55rem 1.25rem;border-radius:3px;border:1.5px solid rgba(0,0,0,.2);background:transparent;color:rgba(0,0,0,.55);cursor:pointer;transition:.2s}
+.btab.on{background:var(--black);color:#fff;border-color:var(--black)}
+.btab:hover:not(.on){background:rgba(0,0,0,.08)}
+.bpanel{display:none;grid-template-columns:repeat(2,1fr);gap:1.25rem;position:relative;z-index:1}
+.bpanel.on{display:grid}
+.bcard{background:rgba(0,0,0,.07);border:1px solid rgba(0,0,0,.1);border-radius:4px;padding:1.5rem;transition:background .2s}
+.bcard:hover{background:rgba(0,0,0,.12)}
+.bcard-icon{font-size:1.2rem;margin-bottom:.55rem}
+.bcard h4{font-family:var(--fd);font-size:.97rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--black);margin-bottom:.4rem}
+.bcard p{font-size:.83rem;color:rgba(0,0,0,.6);font-weight:400;line-height:1.65;margin:0}
+.ben-cta{margin-top:4rem;background:var(--black);border-radius:4px;padding:2.5rem 3rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;position:relative;z-index:1}
+.ben-cta h4{font-family:var(--fd);font-size:1.6rem;font-weight:900;text-transform:uppercase;color:var(--white);line-height:1.1}
+.ben-cta p{font-size:.87rem;color:var(--g400);font-weight:300;margin-top:.4rem}
+.ben-cta-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-orange-w{background:var(--orange);color:#fff;font-family:var(--fd);font-size:.83rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 1.75rem;border:none;border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
+.btn-orange-w:hover{background:var(--orange-dim);transform:translateY(-2px)}
+.btn-ghost-w{background:transparent;color:var(--white);font-family:var(--fd);font-size:.83rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 1.75rem;border:1.5px solid rgba(255,255,255,.2);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color .2s,transform .15s}
+.btn-ghost-w:hover{border-color:var(--white);transform:translateY(-2px)}
+
+/* ─── TEAM ────────────────────────────────────────────── */
+.team{padding:7rem 5vw;background:var(--black)}
+.team-header{text-align:center;margin-bottom:.75rem}
+.team-header .sec-tag{justify-content:center}
+.team-header p{font-size:.95rem;color:var(--g400);font-weight:300;max-width:58ch;margin:.7rem auto 0;line-height:1.75}
+/* photo strip */
+.team-photo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin:3rem 0 0}
+.tph{border-radius:5px;overflow:hidden;height:200px;position:relative}
+.tph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.tph:hover img{transform:scale(1.04)}
+.tph::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.7))}
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:3rem}
+.tc{background:var(--g900);border:1px solid rgba(255,255,255,.05);border-radius:4px;overflow:hidden;transition:transform .25s,border-color .25s}
+.tc:hover{transform:translateY(-4px);border-color:rgba(255,92,26,.25)}
+.tc-img{height:150px;background:var(--g700);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.tc-initial{font-family:var(--fd);font-size:3rem;font-weight:900;color:rgba(255,255,255,.06);font-style:italic;position:relative;z-index:1}
+.tc-img-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--orange)}
+.tc-body{padding:1.25rem}
+.tc h4{font-family:var(--fd);font-size:.97rem;font-weight:800;text-transform:uppercase;letter-spacing:.03em;color:var(--white)}
+.tc-role{font-size:.73rem;color:var(--orange);font-weight:500;letter-spacing:.05em;margin-bottom:.65rem}
+.tc-exp{font-size:.72rem;color:var(--g500);margin-bottom:.6rem}
+.tc-certs{display:flex;flex-wrap:wrap;gap:.3rem;margin-bottom:.6rem}
+.cert{font-size:.62rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--orange);background:rgba(255,92,26,.1);border:1px solid rgba(255,92,26,.2);padding:.18rem .5rem;border-radius:2px}
+.tc-specs{list-style:none;display:flex;flex-direction:column;gap:.28rem}
+.tc-specs li{font-size:.73rem;color:var(--g400);font-weight:300;display:flex;align-items:center;gap:.4rem}
+.tc-specs li::before{content:'●';color:var(--orange);font-size:.38rem}
+.team-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--g700);border:1px solid var(--g700);margin-top:3rem}
+.tstat{background:var(--black);padding:1.75rem;text-align:center}
+.tstat-n{font-family:var(--fd);font-size:2.6rem;font-weight:900;color:var(--orange);line-height:1}
+.tstat-l{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--g400);margin-top:.25rem}
+.team-mindset{margin-top:3rem;background:var(--g900);border:1px solid rgba(255,255,255,.05);border-radius:4px;padding:2.5rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;position:relative;overflow:hidden}
+.team-mindset::before{content:'';position:absolute;right:-20px;top:-20px;width:200px;height:200px;border-radius:50%;border:2px solid rgba(255,92,26,.05)}
+.mi{border-top:1px solid rgba(255,255,255,.07);padding-top:1.25rem;position:relative;z-index:1}
+.mi-icon{font-size:1.4rem;margin-bottom:.55rem}
+.mi h5{font-family:var(--fd);font-size:.9rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--white);margin-bottom:.4rem}
+.mi p{font-size:.8rem;color:var(--g400);font-weight:300;line-height:1.65;margin:0}
+
+/* ─── CONTACT ─────────────────────────────────────────── */
+.contact{padding:7rem 5vw;background:var(--g900)}
+.contact-header{text-align:center;margin-bottom:.75rem}
+.contact-header .sec-tag{justify-content:center}
+.contact-header p{font-size:.95rem;color:var(--g400);font-weight:300;max-width:58ch;margin:.7rem auto 0;line-height:1.75}
+.contact-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:4rem;margin-top:3.5rem;align-items:start}
+.ci-title{font-family:var(--fd);font-size:1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--white);margin-bottom:1.5rem}
+.ci-items{display:flex;flex-direction:column;gap:1rem;margin-bottom:2rem}
+.ci-row{display:flex;align-items:center;gap:.9rem}
+.ci-icon{width:42px;height:42px;border-radius:6px;background:rgba(255,92,26,.1);border:1px solid rgba(255,92,26,.2);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.ci-lbl{font-size:.62rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--g500)}
+.ci-val{font-size:.9rem;color:var(--white);font-weight:400}
+.qrg{background:var(--g800);border:1px solid rgba(255,92,26,.2);border-radius:4px;padding:1.5rem}
+.qrg h5{font-family:var(--fd);font-size:.97rem;font-weight:800;text-transform:uppercase;color:var(--white);margin-bottom:.4rem}
+.qrg p{font-size:.83rem;color:var(--g400);font-weight:300;line-height:1.65;margin-bottom:.6rem}
+.qrg-badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.73rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
+.cform{display:flex;flex-direction:column;gap:1.1rem;background:var(--g800);border:1px solid rgba(255,255,255,.06);border-radius:4px;padding:2.25rem}
+.cform-title{font-family:var(--fd);font-size:1.1rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--white);margin-bottom:.2rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{display:flex;flex-direction:column;gap:.3rem}
+.fg label{font-family:var(--fd);font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--g400)}
+.fg input,.fg textarea,.fg select{width:100%;padding:.8rem 1rem;background:var(--g900);border:1px solid rgba(255,255,255,.07);border-radius:3px;font-family:var(--fb);font-size:.9rem;color:var(--white);outline:none;transition:border-color .2s;resize:none}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--g500);font-weight:300}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--orange)}
+.fg select option{background:var(--g800)}
+.pilot-banner{background:var(--orange);border-radius:4px;padding:2.5rem;text-align:center;margin-top:4rem;position:relative;overflow:hidden}
+.pilot-banner::before{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;border:30px solid rgba(0,0,0,.08)}
+.pilot-banner h3{font-family:var(--fd);font-size:1.7rem;font-weight:900;text-transform:uppercase;color:#fff;margin-bottom:.4rem;position:relative;z-index:1}
+.pilot-banner p{font-size:.9rem;color:rgba(255,255,255,.8);font-weight:300;max-width:50ch;margin:0 auto 1.5rem;line-height:1.7;position:relative;z-index:1}
+.pilot-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.btn-dark{background:var(--black);color:#fff;font-family:var(--fd);font-size:.83rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 1.75rem;border:none;border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block;transition:background .2s,transform .15s}
+.btn-dark:hover{background:var(--g800);transform:translateY(-2px)}
+.btn-outline-w{background:transparent;color:#fff;font-family:var(--fd);font-size:.83rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.8rem 1.75rem;border:1.5px solid rgba(255,255,255,.4);border-radius:3px;cursor:pointer;text-decoration:none;display:inline-block;transition:border-color .2s,transform .15s}
+.btn-outline-w:hover{border-color:#fff;transform:translateY(-2px)}
+
+/* ─── FOOTER ──────────────────────────────────────────── */
+footer{background:var(--black);border-top:1px solid rgba(255,255,255,.05);padding:4.5rem 5vw 2rem}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:3.5rem;margin-bottom:3.5rem}
+.fb p{font-size:.83rem;color:var(--g500);font-weight:300;line-height:1.75;margin:.75rem 0 1.1rem;max-width:28ch}
+.fb-logo{display:flex;align-items:center;gap:.6rem;margin-bottom:.4rem}
+.fb-badge{width:34px;height:34px;background:var(--orange);border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:.78rem;font-weight:900;color:#fff}
+.fb-name{font-family:var(--fd);font-size:1rem;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--white)}
+.fb-tag{font-family:var(--fd);font-size:.58rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--g400)}
+.fb-socials{display:flex;gap:.6rem}
+.soc{width:32px;height:32px;border-radius:4px;background:var(--g800);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:.78rem;cursor:pointer;transition:background .2s;color:var(--g400);text-decoration:none}
+.soc:hover{background:var(--orange);color:#fff}
+.fc h5{font-family:var(--fd);font-size:.75rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--white);margin-bottom:1rem}
+.fc ul{list-style:none;display:flex;flex-direction:column;gap:.52rem}
+.fc a{font-size:.83rem;color:var(--g500);text-decoration:none;font-weight:300;transition:color .2s}
+.fc a:hover{color:var(--white)}
+.fc-item{font-size:.8rem;color:var(--g500);font-weight:300;line-height:1.55}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.fcopy{font-size:.77rem;color:var(--g500)}
+.fpols{display:flex;gap:1.5rem}
+.fpols a{font-size:.77rem;color:var(--g500);text-decoration:none;transition:color .2s}
+.fpols a:hover{color:var(--white)}
+
+/* ─── ANIMATIONS ──────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── RESPONSIVE ──────────────────────────────────────── */
+@media(max-width:1100px){
+  .why-grid{grid-template-columns:1fr 1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:900px){
+  .hero-content{grid-template-columns:1fr}
+  .hero-photo-wrap{display:none}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .ppanel.on{grid-template-columns:1fr}
+  .roles-box{grid-template-columns:1fr}
+  .gov-box{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr;gap:3rem}
+  .team-mindset{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:680px){
+  .nav-menu{display:none}
+  .why-grid{grid-template-columns:1fr}
+  .safety-grid{grid-template-columns:1fr 1fr}
+  .bpanel.on{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  .team-photo-strip{grid-template-columns:1fr 1fr}
+  .hero-stats{grid-template-columns:1fr 1fr}
+  .team-stats{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .about-vm{grid-template-columns:1fr}
+  .process-steps{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .safety-grid,.process-steps,.team-grid{grid-template-columns:1fr}
+  .hero-stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#home" class="nav-logo">
+    <div class="nav-logo-badge">ASL</div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-main">Athlete Sports Lab</span>
+      <span class="nav-logo-sub">Professional Sports Development</span>
+    </div>
+  </a>
+  <ul class="nav-menu">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#why">Why ASL</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#benefits">Benefits</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contact" class="nav-cta">Book Free Trial</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <!-- court grid bg -->
+  <div class="hero-court" aria-hidden="true"></div>
+  <!-- ghost type -->
+  <div class="hero-ghost" aria-hidden="true">ASL</div>
+  <!-- basketball SVG decoration -->
+  <div class="hero-ball-deco" aria-hidden="true">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="rgba(255,255,255,1)" stroke-width="2.5">
+      <circle cx="100" cy="100" r="90"/>
+      <path d="M100,10 Q145,55 145,100 Q145,145 100,190"/>
+      <path d="M100,10 Q55,55 55,100 Q55,145 100,190"/>
+      <path d="M10,75 Q55,90 100,90 Q145,90 190,75"/>
+      <path d="M10,125 Q55,110 100,110 Q145,110 190,125"/>
+      <line x1="100" y1="10" x2="100" y2="190"/>
+    </svg>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="hero-eyebrow-text">🏆 Professional Sports Development Partner</span>
+      </div>
+      <h1>Structured<br/>Basketball<br/>Training<br/><em>Inside Schools.</em></h1>
+      <p class="hero-desc">Long-term sports development partnerships with schools through curriculum-based programs, after-school academies, and PPP sports facility management.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Partner With Us</a>
+        <a href="#programs" class="btn-outline">▶ Start Pilot Program</a>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo">
+        <img src="https://images.unsplash.com/photo-1546519638405-a4f2fa9a2f0a?w=900&q=85&fit=crop" alt="Basketball hoop" loading="eager"/>
+        <div class="hero-photo-badge">
+          <div class="hpb"><div class="hpb-n">500+</div><div class="hpb-l">Students Trained</div></div>
+          <div class="hpb alt"><div class="hpb-n">25+</div><div class="hpb-l">School Partners</div></div>
+          <div class="hpb alt"><div class="hpb-n">10+</div><div class="hpb-l">Yrs Experience</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">500+</div><div class="hstat-l">Students Trained</div></div>
+    <div class="hstat"><div class="hstat-n">25+</div><div class="hstat-l">School Partners</div></div>
+    <div class="hstat"><div class="hstat-n">10+</div><div class="hstat-l">Years Experience</div></div>
+    <div class="hstat"><div class="hstat-n">100%</div><div class="hstat-l">Safety Record</div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="ticker-item">Athlete Sports Lab <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Building Athletes <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Building Champions <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">School Basketball Programs <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">After-School Academy <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">PPP Sports Facility Model <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Mumbai, Maharashtra <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Athlete Sports Lab <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Building Athletes <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Building Champions <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">School Basketball Programs <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">After-School Academy <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">PPP Sports Facility Model <span class="ticker-sep">✦</span></span>
+    <span class="ticker-item">Mumbai, Maharashtra <span class="ticker-sep">✦</span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-ghost" aria-hidden="true">ASL</div>
+  <div class="about-grid">
+    <div class="about-left">
+      <div class="sec-tag"><span>About ASL</span></div>
+      <h2 class="sec-h" style="margin-bottom:1.5rem">About<br/><em>Athlete</em><br/>Sports Lab.</h2>
+      <p>We are not just a coaching academy — we are a long-term sports development partner committed to building structured, safe, and professional basketball programs.</p>
+      <p>We partner with schools and institutions to build sustainable sports programs that prioritize safety, progressive development, and long-term athlete growth through curriculum-based training and professional facility management.</p>
+      <div class="about-vm">
+        <div class="vm">
+          <h4>Our Vision</h4>
+          <p>To create a comprehensive sports ecosystem where every student has access to structured, professional basketball training that develops not just athletic skills, but character, discipline, and life values.</p>
+        </div>
+        <div class="vm">
+          <h4>Our Mission</h4>
+          <p>To partner with schools and institutions in building sustainable sports programs that prioritize safety, progressive development, and long-term athlete growth through curriculum-based training.</p>
+        </div>
+      </div>
+      <div class="about-values">
+        <div class="aval"><div class="aval-icon">🎯</div><h5>Discipline</h5><p>Building character through structured training and consistent practice routines.</p></div>
+        <div class="aval"><div class="aval-icon">🛡️</div><h5>Safety</h5><p>Age-appropriate training with certified coaches and comprehensive safety protocols.</p></div>
+        <div class="aval"><div class="aval-icon">📈</div><h5>Growth</h5><p>Progressive development pathways from beginner to advanced competitive levels.</p></div>
+        <div class="aval"><div class="aval-icon">🤝</div><h5>Community</h5><p>Building strong relationships between schools, parents, and the broader community.</p></div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="about-photo-main">
+        <img src="https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=700&q=85&fit=crop" alt="Youth basketball training" loading="lazy"/>
+      </div>
+      <div class="about-stats-row">
+        <div class="ast"><div class="ast-n">500+</div><div class="ast-l">Students trained</div></div>
+        <div class="ast"><div class="ast-n">25+</div><div class="ast-l">School partners</div></div>
+        <div class="ast"><div class="ast-n">10+</div><div class="ast-l">Years experience</div></div>
+        <div class="ast"><div class="ast-n">15+</div><div class="ast-l">Yrs combined expertise</div></div>
+      </div>
+      <div class="about-photo-secondary">
+        <img src="https://images.unsplash.com/photo-1519861531473-9200262188bf?w=700&q=80&fit=crop" alt="Basketball coaching" loading="lazy"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY ASL -->
+<section class="why" id="why">
+  <div class="why-ball-bg" aria-hidden="true"></div>
+  <div class="why-header">
+    <div class="sec-tag"><span>Why Choose Us</span></div>
+    <h2 class="sec-h">Why Athlete Sports Lab<br/><em>is Different.</em></h2>
+    <p>We understand that schools need more than just coaching — they need a reliable, professional partner who shares their commitment to student development and safety.</p>
+  </div>
+  <div class="why-grid">
+    <div class="wcard"><div class="wcard-num">01</div><div class="wcard-icon">📋</div><h3>Structured Curriculum</h3><p>Age-appropriate, progressive training modules designed specifically for school environments with clear learning objectives and skill development milestones.</p></div>
+    <div class="wcard"><div class="wcard-num">02</div><div class="wcard-icon">🏫</div><h3>School-Focused Experience</h3><p>Extensive experience working within school systems, understanding administrative requirements, safety protocols, and educational integration.</p></div>
+    <div class="wcard"><div class="wcard-num">03</div><div class="wcard-icon">🛡️</div><h3>Safety & Discipline First</h3><p>Comprehensive safety protocols, certified coaching staff, and emphasis on discipline, respect, and sportsmanship in every session.</p></div>
+    <div class="wcard"><div class="wcard-num">04</div><div class="wcard-icon">♾️</div><h3>Long-term Partnership</h3><p>Not just a service provider, but a committed partner in building sustainable sports programs that grow with your institution.</p></div>
+    <div class="wcard"><div class="wcard-num">05</div><div class="wcard-icon">🏅</div><h3>Professional Standards</h3><p>Certified coaches, standardized training methods, regular assessments, and transparent reporting to school administration.</p></div>
+    <div class="wcard"><div class="wcard-num">06</div><div class="wcard-icon">📊</div><h3>Proven Track Record</h3><p>Successful partnerships with 25+ schools, 500+ students trained, and measurable improvements in student engagement and fitness.</p></div>
+  </div>
+  <div class="why-cta">
+    <div>
+      <h4>Ready to Transform Your School's<br/>Sports Program?</h4>
+      <p>Join 25+ schools that have already partnered with us to create structured, safe, and engaging basketball programs.</p>
+    </div>
+    <div class="why-cta-btns">
+      <a href="#contact" class="btn-orange">Schedule a Meeting</a>
+      <a href="#contact" class="btn-ghost-o">Download Brochure</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="prog-top">
+    <div>
+      <div class="sec-tag"><span>Our Programs</span></div>
+      <h2 class="sec-h">Comprehensive Sports<br/><em>Development Programs.</em></h2>
+    </div>
+    <p>From curriculum-based school programs to professional facility management, we offer complete solutions for every sports development need.</p>
+  </div>
+  <div class="prog-tabs">
+    <button class="ptab on" onclick="showP('pp1',this)">🏫 School Basketball Programs</button>
+    <button class="ptab" onclick="showP('pp2',this)">⏰ After-School Basketball Academy</button>
+    <button class="ptab" onclick="showP('pp3',this)">🏢 PPP Sports Facility Model</button>
+  </div>
+
+  <div class="ppanel on" id="pp1">
+    <div>
+      <div class="pp-icon">🏫</div>
+      <h3><em>School</em> Basketball Programs</h3>
+      <p class="pp-sub">Curriculum-based basketball training integrated into school schedules</p>
+      <div class="pp-sec-title">Program Features</div>
+      <ul class="pp-list">
+        <li>Age-wise structured curriculum (6–18 years)</li>
+        <li>2–3 sessions per week during/after school hours</li>
+        <li>Certified coaches with school experience</li>
+        <li>Progress tracking and regular assessments</li>
+        <li>Integration with school academic calendar</li>
+        <li>Parent-teacher-coach communication system</li>
+      </ul>
+      <div class="pp-sec-title">Key Benefits</div>
+      <ul class="pp-list">
+        <li>Improved student fitness and health</li>
+        <li>Enhanced discipline and focus in academics</li>
+        <li>Reduced screen time and increased physical activity</li>
+        <li>Team building and social skills development</li>
+      </ul>
+      <div class="pp-tags"><span class="pp-tag">Ages 6–18</span><span class="pp-tag">In-School</span><span class="pp-tag">Curriculum-Based</span></div>
+    </div>
+    <div class="pp-photo">
+      <img src="https://images.unsplash.com/photo-1515523110800-9415d13b84a8?w=700&q=80&fit=crop" alt="School basketball program" loading="lazy"/>
+      <div class="pp-photo-label">School Basketball Programs · Ages 6–18</div>
+    </div>
+  </div>
+
+  <div class="ppanel" id="pp2">
+    <div>
+      <div class="pp-icon">⏰</div>
+      <h3><em>After-School</em> Basketball Academy</h3>
+      <p class="pp-sub">Voluntary enrollment program for serious basketball development</p>
+      <div class="pp-sec-title">Program Features</div>
+      <ul class="pp-list">
+        <li>Limited batch sizes for personalized attention</li>
+        <li>Advanced skill development modules</li>
+        <li>Competitive team formation and tournaments</li>
+        <li>Professional pathway guidance</li>
+        <li>Fitness and nutrition education</li>
+        <li>Mental conditioning and sports psychology</li>
+      </ul>
+      <div class="pp-sec-title">Key Benefits</div>
+      <ul class="pp-list">
+        <li>Elite skill development opportunities</li>
+        <li>Pathway to competitive basketball</li>
+        <li>Leadership and teamwork skills</li>
+        <li>College scholarship preparation</li>
+      </ul>
+      <div class="pp-tags"><span class="pp-tag">Voluntary Enroll</span><span class="pp-tag">Advanced</span><span class="pp-tag">Competitive</span></div>
+    </div>
+    <div class="pp-photo">
+      <img src="https://images.unsplash.com/photo-1504450758481-7338eba7524a?w=700&q=80&fit=crop" alt="After-school basketball academy" loading="lazy"/>
+      <div class="pp-photo-label">After-School Academy · Advanced Training</div>
+    </div>
+  </div>
+
+  <div class="ppanel" id="pp3">
+    <div>
+      <div class="pp-icon">🏢</div>
+      <h3><em>PPP</em> Sports Facility Model</h3>
+      <p class="pp-sub">Public-Private Partnership for comprehensive sports facility management</p>
+      <div class="pp-sec-title">Program Features</div>
+      <ul class="pp-list">
+        <li>Complete facility design and setup</li>
+        <li>Professional equipment procurement</li>
+        <li>Revenue optimization strategies</li>
+        <li>Community engagement programs</li>
+        <li>Multi-sport facility management</li>
+        <li>Long-term maintenance and upgrades</li>
+      </ul>
+      <div class="pp-sec-title">Key Benefits</div>
+      <ul class="pp-list">
+        <li>Sustainable revenue generation</li>
+        <li>Community sports development</li>
+        <li>Professional facility management</li>
+        <li>Government partnership opportunities</li>
+      </ul>
+      <div class="pp-tags"><span class="pp-tag">PPP Model</span><span class="pp-tag">Facility Mgmt</span><span class="pp-tag">Long-term</span></div>
+    </div>
+    <div class="pp-photo">
+      <img src="https://images.unsplash.com/photo-1505666287802-931dc83948e9?w=700&q=80&fit=crop" alt="Sports facility" loading="lazy"/>
+      <div class="pp-photo-label">PPP Sports Facility Model</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="process-ghost" aria-hidden="true">PROCESS</div>
+  <div class="process-header">
+    <div class="sec-tag"><span>Our Process</span></div>
+    <h2 class="sec-h">How It <em>Works.</em></h2>
+    <p>Our proven 5-step process ensures smooth implementation and long-term success of your school's basketball program.</p>
+  </div>
+  <div class="process-steps">
+    <div class="pstep"><div class="pstep-n">01</div><div class="pstep-badge">1–2 Weeks</div><h4>Initial Consultation</h4><p>We meet with school administration to understand your specific needs, facilities, and student demographics.</p></div>
+    <div class="pstep"><div class="pstep-n">02</div><div class="pstep-badge">4–6 Weeks</div><h4>Pilot Program Launch</h4><p>Start with a 4–6 week pilot program to demonstrate our methodology and measure student engagement.</p></div>
+    <div class="pstep"><div class="pstep-n">03</div><div class="pstep-badge">1 Week</div><h4>Assessment & Feedback</h4><p>Comprehensive evaluation of pilot results with feedback from students, parents, and school administration.</p></div>
+    <div class="pstep"><div class="pstep-n">04</div><div class="pstep-badge">Ongoing</div><h4>Full Program Implementation</h4><p>Roll out the complete program with certified coaches, structured curriculum, and ongoing support.</p></div>
+    <div class="pstep"><div class="pstep-n">05</div><div class="pstep-badge">Long-term</div><h4>Long-term Partnership</h4><p>Continuous program enhancement, coach training, facility upgrades, and expansion opportunities.</p></div>
+  </div>
+  <div class="roles-box">
+    <div class="rb-left">
+      <h4>Roles & Responsibilities</h4>
+      <p>Clear division of responsibilities ensures smooth program operation and accountability.</p>
+      <div class="role-row">
+        <div class="role-label role-asl">ASL Responsibilities</div>
+        <p>Certified coaches, curriculum, equipment, training materials, progress tracking</p>
+      </div>
+      <div class="role-row">
+        <div class="role-label role-school">School Responsibilities</div>
+        <p>Facility access, student enrollment, scheduling coordination, administrative support</p>
+      </div>
+    </div>
+    <div class="rb-right">
+      <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=700&q=80&fit=crop" alt="Team collaboration" loading="lazy"/>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section class="safety" id="safety">
+  <div class="safety-header">
+    <div class="sec-tag"><span>Safety & Governance</span></div>
+    <h2 class="sec-h">Safety, Discipline<br/>&amp; <em>Governance.</em></h2>
+    <p>Student safety and program integrity are our top priorities. We maintain the highest standards of safety, discipline, and transparent governance.</p>
+  </div>
+  <div class="safety-grid">
+    <div class="scard"><div class="scard-icon">🛡️</div><h4>Certified Coaching Staff</h4><p>All coaches are certified with background checks and specialized training in youth sports development.</p></div>
+    <div class="scard"><div class="scard-icon">👶</div><h4>Age-Appropriate Training</h4><p>Curriculum designed specifically for different age groups with appropriate intensity and skill progression.</p></div>
+    <div class="scard"><div class="scard-icon">📋</div><h4>Attendance Tracking</h4><p>Digital attendance system with real-time parent notifications and school administration updates.</p></div>
+    <div class="scard"><div class="scard-icon">🚨</div><h4>Emergency Protocols</h4><p>Comprehensive emergency response procedures with trained first aid personnel on site.</p></div>
+    <div class="scard"><div class="scard-icon">📜</div><h4>Code of Conduct</h4><p>Clear behavioral guidelines for students, coaches, and parents ensuring a positive environment.</p></div>
+    <div class="scard"><div class="scard-icon">🏫</div><h4>School Control</h4><p>School administration maintains full oversight and approval authority over all program activities.</p></div>
+  </div>
+  <div class="gov-box">
+    <div class="gov-left">
+      <h4>Governance Framework</h4>
+      <p>Our governance framework ensures transparency, accountability, and continuous improvement in all aspects of program delivery.</p>
+      <ul class="gov-list">
+        <li>Regular safety audits and compliance checks</li>
+        <li>Parent teacher coach communication channels</li>
+        <li>Transparent reporting and feedback systems</li>
+        <li>Continuous coach training and development</li>
+        <li>Equipment safety standards and maintenance</li>
+        <li>Insurance coverage for all activities</li>
+      </ul>
+    </div>
+    <div class="gov-right">
+      <img src="https://images.unsplash.com/photo-1576941333969-2f96c8e25bc3?w=700&q=80&fit=crop" alt="Basketball practice" loading="lazy"/>
+      <div class="gov-photo-overlay">🛡️ Safety First Approach</div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section class="benefits" id="benefits">
+  <div class="ben-top">
+    <div>
+      <div class="sec-tag"><span>Benefits & Value</span></div>
+      <h2 class="sec-h">Benefits for <em>Everyone.</em></h2>
+    </div>
+    <p class="ben-sub">Our comprehensive approach creates value for all stakeholders in the sports development ecosystem.</p>
+  </div>
+  <div class="ben-tabs">
+    <button class="btab on" onclick="showB('b1',this)">🏫 For Schools</button>
+    <button class="btab" onclick="showB('b2',this)">🏀 For Students</button>
+    <button class="btab" onclick="showB('b3',this)">👨‍👩‍👧 For Parents</button>
+    <button class="btab" onclick="showB('b4',this)">🏢 For Facility Owners</button>
+  </div>
+  <div class="bpanel on" id="b1">
+    <div class="bcard"><div class="bcard-icon">📈</div><h4>Enhanced Student Engagement</h4><p>Improved attendance and academic performance through structured physical activity.</p></div>
+    <div class="bcard"><div class="bcard-icon">🛡️</div><h4>Professional Program Management</h4><p>Complete program oversight with certified coaches and safety protocols.</p></div>
+    <div class="bcard"><div class="bcard-icon">💰</div><h4>Cost-Effective Solution</h4><p>Professional sports program without the overhead of hiring full-time staff.</p></div>
+    <div class="bcard"><div class="bcard-icon">⭐</div><h4>School Reputation Enhancement</h4><p>Recognition as a progressive institution with comprehensive student development.</p></div>
+  </div>
+  <div class="bpanel" id="b2">
+    <div class="bcard"><div class="bcard-icon">🏋️</div><h4>Physical Development</h4><p>Structured training that improves fitness, coordination, and athletic performance.</p></div>
+    <div class="bcard"><div class="bcard-icon">🧠</div><h4>Mental Strength</h4><p>Sports psychology and mental conditioning that builds confidence and resilience.</p></div>
+    <div class="bcard"><div class="bcard-icon">🏆</div><h4>Competitive Pathway</h4><p>Opportunities to compete, progress, and pursue basketball at higher levels.</p></div>
+    <div class="bcard"><div class="bcard-icon">👥</div><h4>Life Skills</h4><p>Teamwork, leadership, discipline, and social skills developed through sport.</p></div>
+  </div>
+  <div class="bpanel" id="b3">
+    <div class="bcard"><div class="bcard-icon">👀</div><h4>Full Transparency</h4><p>Regular progress reports, attendance tracking, and open communication with coaches.</p></div>
+    <div class="bcard"><div class="bcard-icon">🛡️</div><h4>Safety Assurance</h4><p>Certified coaches, safe environments, and emergency protocols for peace of mind.</p></div>
+    <div class="bcard"><div class="bcard-icon">📊</div><h4>Measurable Progress</h4><p>Clear milestones and assessments so parents can see their child's development.</p></div>
+    <div class="bcard"><div class="bcard-icon">🤝</div><h4>Community Connection</h4><p>Be part of a growing sports community within your child's school ecosystem.</p></div>
+  </div>
+  <div class="bpanel" id="b4">
+    <div class="bcard"><div class="bcard-icon">💵</div><h4>Sustainable Revenue</h4><p>Professional facility management generating consistent, sustainable revenue streams.</p></div>
+    <div class="bcard"><div class="bcard-icon">🏢</div><h4>Facility Optimization</h4><p>Maximize the use of your sports infrastructure with professional programming.</p></div>
+    <div class="bcard"><div class="bcard-icon">🌍</div><h4>Community Impact</h4><p>Be a positive force in youth development and sports in your community.</p></div>
+    <div class="bcard"><div class="bcard-icon">🤝</div><h4>Government Partnerships</h4><p>Access PPP opportunities and government partnership programs for development.</p></div>
+  </div>
+  <div class="ben-cta">
+    <div>
+      <h4>Ready to Experience These Benefits?</h4>
+      <p>Join our growing network of schools, students, parents, and facility partners experiencing the ASL advantage.</p>
+    </div>
+    <div class="ben-cta-btns">
+      <a href="tel:+919867675739" class="btn-orange-w">📞 Call Us Today</a>
+      <a href="#contact" class="btn-ghost-w">Send Inquiry</a>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="team-header">
+    <div class="sec-tag"><span>Our Team</span></div>
+    <h2 class="sec-h">Meet Our <em>Expert Team.</em></h2>
+    <p>Our team of certified coaches and sports management professionals brings together decades of experience in youth development and school partnerships.</p>
+  </div>
+
+  <!-- photo strip -->
+  <div class="team-photo-strip">
+    <div class="tph"><img src="https://images.unsplash.com/photo-1546519638405-a4f2fa9a2f0a?w=500&q=80&fit=crop" alt="Basketball hoop" loading="lazy"/></div>
+    <div class="tph"><img src="https://images.unsplash.com/photo-1484482340112-e1e2682b4856?w=500&q=80&fit=crop" alt="Basketball training" loading="lazy"/></div>
+    <div class="tph"><img src="https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=500&q=80&fit=crop" alt="Youth basketball" loading="lazy"/></div>
+  </div>
+
+  <div class="team-grid">
+    <div class="tc">
+      <div class="tc-img"><div class="tc-initial">HK</div><div class="tc-img-bar"></div></div>
+      <div class="tc-body">
+        <h4>Hammad Khan</h4>
+        <div class="tc-role">Head Coach & Program Director</div>
+        <div class="tc-exp">12+ years experience</div>
+        <div class="tc-certs"><span class="cert">FIBA Certified</span><span class="cert">Youth Dev Specialist</span></div>
+        <ul class="tc-specs"><li>Team Building</li><li>Skill Development</li><li>Leadership Training</li></ul>
+      </div>
+    </div>
+    <div class="tc">
+      <div class="tc-img"><div class="tc-initial">PS</div><div class="tc-img-bar"></div></div>
+      <div class="tc-body">
+        <h4>Priya Sharma</h4>
+        <div class="tc-role">Sports Physiotherapist</div>
+        <div class="tc-exp">10+ years experience</div>
+        <div class="tc-certs"><span class="cert">Child Psychology</span><span class="cert">SCS Certified</span></div>
+        <ul class="tc-specs"><li>Program Management</li><li>School Relations</li><li>Strategic Planning</li></ul>
+      </div>
+    </div>
+    <div class="tc">
+      <div class="tc-img"><div class="tc-initial">SJ</div><div class="tc-img-bar"></div></div>
+      <div class="tc-body">
+        <h4>Suyash Jain</h4>
+        <div class="tc-role">Senior Basketball Coach</div>
+        <div class="tc-exp">10+ years experience</div>
+        <div class="tc-certs"><span class="cert">Basketball India</span><span class="cert">First Aid Certified</span></div>
+        <ul class="tc-specs"><li>Technical Skills</li><li>Game Strategy</li><li>Player Development</li></ul>
+      </div>
+    </div>
+    <div class="tc">
+      <div class="tc-img"><div class="tc-initial">AM</div><div class="tc-img-bar"></div></div>
+      <div class="tc-body">
+        <h4>Avelino Monterio</h4>
+        <div class="tc-role">Youth Development Coach</div>
+        <div class="tc-exp">6+ years experience</div>
+        <div class="tc-certs"><span class="cert">Sports Mgmt MBA</span><span class="cert">Partnership Spec.</span></div>
+        <ul class="tc-specs"><li>Age-Group Training</li><li>Character Building</li><li>Safety Protocols</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-stats">
+    <div class="tstat"><div class="tstat-n">25+</div><div class="tstat-l">Certified Coaches</div></div>
+    <div class="tstat"><div class="tstat-n">500+</div><div class="tstat-l">Students Trained</div></div>
+    <div class="tstat"><div class="tstat-n">15+</div><div class="tstat-l">Years Combined Experience</div></div>
+    <div class="tstat"><div class="tstat-n">100%</div><div class="tstat-l">Safety Record</div></div>
+  </div>
+
+  <div class="team-mindset">
+    <div class="mi"><div class="mi-icon">❤️</div><h5>Passion for Development</h5><p>Every coach is passionate about nurturing young talent and helping students reach their full potential.</p></div>
+    <div class="mi"><div class="mi-icon">🎓</div><h5>Continuous Learning</h5><p>Regular training and certification updates keep our coaches at the forefront of youth sports development.</p></div>
+    <div class="mi"><div class="mi-icon">🌍</div><h5>Community Focus</h5><p>Building stronger communities through sport — one school and one student at a time.</p></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-header">
+    <div class="sec-tag"><span>Get In Touch</span></div>
+    <h2 class="sec-h">Contact &amp; <em>Partnership.</em></h2>
+    <p>Ready to transform your school's sports program? Let's discuss how we can create a customized basketball development program for your institution.</p>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <div class="ci-title">Let's Start the Conversation</div>
+      <div class="ci-items">
+        <div class="ci-row"><div class="ci-icon">📞</div><div><div class="ci-lbl">Phone</div><div class="ci-val">+91 98676 75739</div></div></div>
+        <div class="ci-row"><div class="ci-icon">✉️</div><div><div class="ci-lbl">Email</div><div class="ci-val">info@athletesportslab.com</div></div></div>
+        <div class="ci-row"><div class="ci-icon">✉️</div><div><div class="ci-lbl">Gmail</div><div class="ci-val">athletesportslab@gmail.com</div></div></div>
+        <div class="ci-row"><div class="ci-icon">📍</div><div><div class="ci-lbl">Office</div><div class="ci-val">Mumbai, Maharashtra 400092</div></div></div>
+        <div class="ci-row"><div class="ci-icon">🕐</div><div><div class="ci-lbl">Hours</div><div class="ci-val">Mon–Fri 9AM–6PM · Sat 9AM–2PM</div></div></div>
+      </div>
+      <div class="qrg">
+        <h5>Quick Response Guarantee</h5>
+        <p>We understand that school decisions require quick turnaround. We guarantee a response within 24 hours for all partnership inquiries.</p>
+        <div class="qrg-badge">⏱ 24-Hour Response Time</div>
+      </div>
+    </div>
+    <form class="cform" onsubmit="handleForm(event)">
+      <div class="cform-title">Partnership Inquiry Form</div>
+      <div class="frow">
+        <div class="fg"><label>Full Name *</label><input type="text" placeholder="Your full name" required/></div>
+        <div class="fg"><label>Email Address *</label><input type="email" placeholder="your.email@school.com" required/></div>
+      </div>
+      <div class="frow">
+        <div class="fg"><label>Phone Number *</label><input type="tel" placeholder="+91 98765 43210" required/></div>
+        <div class="fg"><label>Your Role *</label>
+          <select required>
+            <option value="">Select your role</option>
+            <option>School Principal / Administrator</option>
+            <option>Sports Teacher / Coach</option>
+            <option>Parent</option>
+            <option>Student Athlete</option>
+            <option>Facility Owner</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>School / Organisation Name</label><input type="text" placeholder="Your school or organization name"/></div>
+      <div class="fg"><label>Program Interest</label>
+        <select>
+          <option value="">Select program of interest</option>
+          <option>School Basketball Programs</option>
+          <option>After-School Basketball Academy</option>
+          <option>PPP Sports Facility Model</option>
+          <option>Pilot Programs</option>
+          <option>Coach Training</option>
+        </select>
+      </div>
+      <div class="fg"><label>Message</label><textarea rows="4" placeholder="Tell us about your requirements, student count, facilities, and any specific questions…"></textarea></div>
+      <button type="submit" id="send-btn" class="btn-primary" style="width:100%;padding:1rem;border-radius:3px">Send Partnership Inquiry →</button>
+      <p style="font-size:.73rem;color:var(--g500);text-align:center">By submitting this form, you agree to be contacted by our team regarding partnership opportunities.</p>
+    </form>
+  </div>
+
+  <div class="pilot-banner">
+    <h3>Ready to Start Your Pilot Program?</h3>
+    <p>Experience the ASL difference with a 4–6 week pilot program. No long-term commitment required — just results you can see.</p>
+    <div class="pilot-btns">
+      <a href="#contact" class="btn-dark">▶ Start Pilot Program</a>
+      <a href="#contact" class="btn-outline-w">📅 Schedule Demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="fb">
+      <div class="fb-logo">
+        <div class="fb-badge">ASL</div>
+        <div>
+          <div class="fb-name">Athlete Sports Lab</div>
+          <div class="fb-tag">Professional Sports Development</div>
+        </div>
+      </div>
+      <p>Building structured, safe, and professional basketball programs through long-term partnerships with schools and institutions.</p>
+      <div class="fb-socials">
+        <a class="soc" href="#">f</a>
+        <a class="soc" href="#">in</a>
+        <a class="soc" href="#">ig</a>
+        <a class="soc" href="#">yt</a>
+      </div>
+    </div>
+    <div class="fc">
+      <h5>Quick Links</h5>
+      <ul>
+        <li><a href="#about">About ASL</a></li>
+        <li><a href="#why">Why Choose Us</a></li>
+        <li><a href="#programs">Programs</a></li>
+        <li><a href="#benefits">Benefits</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Our Programs</h5>
+      <ul>
+        <li><a href="#programs">School Basketball Programs</a></li>
+        <li><a href="#programs">After-School Academy</a></li>
+        <li><a href="#programs">PPP Sports Facility</a></li>
+        <li><a href="#programs">Pilot Programs</a></li>
+        <li><a href="#contact">Coach Training</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Contact Info</h5>
+      <ul>
+        <li><div class="fc-item">📞 +91 98676 75739</div></li>
+        <li><div class="fc-item">✉️ info@athletesportslab.com</div></li>
+        <li><div class="fc-item">📍 Mumbai, Maharashtra</div></li>
+        <li><div class="fc-item">🕐 Mon–Fri: 9AM–6PM</div></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="fcopy">© 2024 Athlete Sports Lab. All rights reserved.</div>
+    <div class="fpols">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Powered by AthletesSportsLab</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showP(id,btn){
+  document.querySelectorAll('.ppanel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+function showB(id,btn){
+  document.querySelectorAll('.bpanel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.btab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  btn.classList.add('on');
+}
+function handleForm(e){
+  e.preventDefault();
+  const btn=document.getElementById('send-btn');
+  btn.textContent='Sending…';btn.disabled=true;btn.style.opacity='.6';
+  setTimeout(()=>{
+    btn.textContent='✓ Inquiry Sent! We\'ll respond within 24 hours.';
+    e.target.reset();
+    setTimeout(()=>{
+      btn.textContent='Send Partnership Inquiry →';
+      btn.disabled=false;btn.style.opacity='1';
+    },4500);
+  },1200);
+}
+</script>
+</body>
+</html>
